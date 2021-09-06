@@ -49,6 +49,12 @@ const theme = extendTheme({
                 shadow: {
                     boxShadow: '0 0 14px -8px black',
                     borderRadius: '40px',
+                    _focus: {
+                        boxShadow: '0 0 14px -2px #4299E1',
+                    },
+                    _active: {
+                        boxShadow: '0 0 16px -1px #4299E1',
+                    },
                 },
                 facebook: {
                     bg: 'facebook.background',
@@ -59,6 +65,71 @@ const theme = extendTheme({
                     border: '1px',
                     borderColor: 'google.border',
                     color: 'darkgrey',
+                },
+            },
+        },
+        Input: {
+            variants: {
+                filled: {
+                    field: {
+                        bg: 'elements.surfaces',
+                        color: 'black',
+                        _hover: {
+                            bg: 'elements.inputs',
+                        },
+                        _focus: {
+                            bg: 'elements.surfaces',
+                        },
+                        _invalid: {
+                            color: 'red',
+                            borderColor: 'red',
+                            _focus: {
+                                borderColor: 'red',
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        Checkbox: {
+            variants: {
+                'bip-bap': {
+                    control: {
+                        borderColor: 'elements.lines',
+                        borderWidth: '2px',
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '5px',
+                        _checked: {
+                            bg: 'darkgrey',
+                            borderColor: 'darkgrey',
+                            _hover: {
+                                bg: 'darkgrey',
+                                borderColor: 'darkgrey',
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        Radio: {
+            variants: {
+                'bip-bap': {
+                    control: {
+                        borderColor: 'elements.lines',
+                        borderWidth: '2px',
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '12px',
+                        _checked: {
+                            bg: 'darkgrey',
+                            borderColor: 'darkgrey',
+                            _hover: {
+                                bg: 'darkgrey',
+                                borderColor: 'darkgrey',
+                            },
+                        },
+                    },
                 },
             },
         },

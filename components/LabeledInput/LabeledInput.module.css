@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.container__input {
+    display: flex;
+    align-items: center;
+}
+
+.input__label {
+    position: absolute;
+    z-index: 10;
+    text-align: left;
+    margin-left: 17px;
+    transition: 200ms;
+    pointer-events: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.container__hint {
+    text-align: right;
+    font-size: 11px;
+    margin-top: 2px;
+}
