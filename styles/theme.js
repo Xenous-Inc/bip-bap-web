@@ -11,6 +11,7 @@ const theme = extendTheme({
             lines: '#afb0b9',
             inputs: '#d7d7dc',
             surfaces: '#ebebed',
+            icons: '#5F6172',
         },
         facebook: {
             background: '#1877F2',
