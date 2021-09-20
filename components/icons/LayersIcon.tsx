@@ -1,11 +1,11 @@
 import React, { SVGAttributes } from 'react';
 import theme from '@styles/theme';
 
-const SignInIcon: React.FC<SVGAttributes<any>> = props => {
+const LayersIcon: React.FC<SVGAttributes<any>> = props => {
     return (
-        <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' {...props}>
+        <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none' {...props}>
             <path
-                d='M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15'
+                d='M16.0001 2.97919L2.97925 9.4896L16.0001 16L29.0209 9.4896L16.0001 2.97919Z'
                 stroke={theme.colors.elements.icons}
                 strokeWidth='1.5'
                 strokeLinecap='round'
@@ -13,7 +13,7 @@ const SignInIcon: React.FC<SVGAttributes<any>> = props => {
                 {...props}
             />
             <path
-                d='M10 17L15 12L10 7'
+                d='M2.97925 22.5104L16.0001 29.0209L29.0209 22.5104'
                 stroke={theme.colors.elements.icons}
                 strokeWidth='1.5'
                 strokeLinecap='round'
@@ -21,7 +21,7 @@ const SignInIcon: React.FC<SVGAttributes<any>> = props => {
                 {...props}
             />
             <path
-                d='M15 12H3'
+                d='M2.97925 16L16.0001 22.5104L29.0209 16'
                 stroke={theme.colors.elements.icons}
                 strokeWidth='1.5'
                 strokeLinecap='round'
@@ -32,4 +32,4 @@ const SignInIcon: React.FC<SVGAttributes<any>> = props => {
     );
 };
 
-export default SignInIcon;
+export default LayersIcon;
