@@ -48,12 +48,14 @@ const theme = extendTheme({
                     boxSizing: 'border-box',
                 },
                 shadow: {
+                    bg: 'white',
                     boxShadow: '0 0 14px -8px black',
                     borderRadius: '40px',
                     _focus: {
                         boxShadow: '0 0 14px -2px #4299E1',
                     },
                     _active: {
+                        bg: 'elements.surfaces',
                         boxShadow: '0 0 16px -1px #4299E1',
                     },
                 },
