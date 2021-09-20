@@ -1,0 +1,117 @@
+.container {
+    padding: 12px 16px;
+}
+
+.container__settings {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.container__legend {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 8px 10px;
+    border-radius: 24px;
+    background-color: var(--chakra-colors-white);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+}
+.container__legend > * {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+.legend__gradient {
+    width: 6px;
+    height: 152px;
+    border-radius: 6px;
+    background: linear-gradient(0deg, var(--chakra-colors-red) 0%, var(--chakra-colors-yellow) 50%, var(--chakra-colors-green) 100%);
+}
+
+.container__zoom {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+}
+.container__zoom > * {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.container__layers {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    right: 16px;
+    bottom: 16px;
+}
+
+.layers__icon {
+    transition: 200ms;
+}
+.layers__icon_state_active {
+    transform: rotateZ(135deg);
+}
+.layers__icon_state_inactive {
+    transform: rotateZ(0deg);
+}
+
+.layers__selector {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    right: calc(var(--chakra-sizes-10)/2);
+    overflow: hidden;
+    transition: 200ms;
+    border-bottom-left-radius: calc(var(--chakra-sizes-10)/2);
+    border-top-left-radius: calc(var(--chakra-sizes-10)/2);
+}
+.layers__selector_state_active {
+    width: 280px;
+}
+.layers__selector_state_inactive {
+    width: 0;
+}
+
+.selector__selectorOptions {
+    border-bottom-left-radius: calc(var(--chakra-sizes-10)/2);
+    border-top-left-radius: calc(var(--chakra-sizes-10)/2);
+
+    position: absolute;
+    height: 100%;
+    right: 0;
+    background-color: var(--chakra-colors-white);
+    padding-right: calc(var(--chakra-sizes-10)/2);
+    padding-left: 6px;
+
+    display: flex;
+    align-items: center;
+}
+
+.selectorOptions__option {
+    display: flex;
+    flex-direction: row;
+    margin-right: 2px;
+    padding: 4px 8px;
+    border-radius: 16px;
+    transition: 200ms;
+    user-select: none;
+}
+.selectorOptions__option > svg {
+    margin-right: 4px;
+    transition: 200ms;
+}
+.selectorOptions__option_state_active {
+    background-color: var(--chakra-colors-brand-accent);
+    color: var(--chakra-colors-white);
+}
