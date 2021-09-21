@@ -3,7 +3,6 @@ import styles from './Header.module.css';
 import { Button } from '@chakra-ui/react';
 import Link from 'next/link';
 import MapIcon from '@icons/MapIcon';
-import ListIcon from '@icons/ListIcon';
 import BarChartIcon from '@icons/BarChartIcon';
 import { useRouter } from 'next/router';
 import SignInIcon from '@icons/SignInIcon';
@@ -58,7 +57,7 @@ const Header: React.FC<IHeaderProp> = props => {
 
                 <div className={styles.stack__navigator}>
                     <Tab href={'/map'} icon={MapIcon} title={'Карта'} />
-                    <Tab href={'/list'} icon={ListIcon} title={'Список датчиков'} />
+                    {/*<Tab href={'/list'} icon={ListIcon} title={'Список датчиков'} />*/}
                     <Tab href={'/rating'} icon={BarChartIcon} title={'Рейтинг городов'} />
                     {/*<Tab href={'/subscriptions'} icon={NotificationsIcon} title={'Подписки'} />*/}
                     {/*<Tab href={'/saved'} icon={BookmarkIcon} title={'Избранные датчики'} />*/}
