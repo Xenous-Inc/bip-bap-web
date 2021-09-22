@@ -1,12 +1,15 @@
 import React, { ReactElement } from 'react';
 import styles from './Header.module.css';
-import { Button } from '@chakra-ui/react';
+import { Button, IconButton } from '@chakra-ui/react';
 import Link from 'next/link';
 import MapIcon from '@icons/MapIcon';
 import ListIcon from '@icons/ListIcon';
 import BarChartIcon from '@icons/BarChartIcon';
 import { useRouter } from 'next/router';
 import SignInIcon from '@icons/SignInIcon';
+import NotificationsIcon from '@icons/NotificationsIcon';
+import BookmarkIcon from '@icons/BookmarkIcon';
+import UserDefaultIcon from '@icons/UserDefaultIcon';
 
 interface ITabProp {
     icon: React.FC | ReactElement;
@@ -15,6 +18,8 @@ interface ITabProp {
 
     href: string;
 }
+
+const authorized = true;
 
 const Tab: React.FC<ITabProp> = ({ icon, title, href }) => {
     const router = useRouter();
@@ -57,19 +62,41 @@ const Header: React.FC<IHeaderProp> = props => {
                 </div>
 
                 <div className={styles.stack__navigator}>
-                    <Tab href={'/map'} icon={MapIcon} title={'Карта'} />
-                    <Tab href={'/list'} icon={ListIcon} title={'Список датчиков'} />
-                    <Tab href={'/rating'} icon={BarChartIcon} title={'Рейтинг городов'} />
-                    {/*<Tab href={'/subscriptions'} icon={NotificationsIcon} title={'Подписки'} />*/}
-                    {/*<Tab href={'/saved'} icon={BookmarkIcon} title={'Избранные датчики'} />*/}
+                    {authorized ? (
+                        <>
+                            <Tab href={'/map'} icon={MapIcon} title={'Карта'} />
+                            <Tab href={'/rating'} icon={BarChartIcon} title={'Рейтинг городов'} />
+                            <Tab href={'/list'} icon={ListIcon} title={'Список датчиков'} />
+                            <Tab href={'/subscriptions'} icon={NotificationsIcon} title={'Подписки'} />
+                            <Tab href={'/saved'} icon={BookmarkIcon} title={'Избранные датчики'} />
+                        </>
+                    ) : (
+                        <>
+                            <Tab href={'/map'} icon={MapIcon} title={'Карта'} />
+                            <Tab href={'/rating'} icon={BarChartIcon} title={'Рейтинг городов'} />
+                        </>
+                    )}
                 </div>
 
                 <div className={styles.stack__side}>
                     <div className={styles.side__spacer_align_inner} />
                     <div className={`${styles.side__sideContent} ${styles.side__sideContent_align_end}`}>
-                        <Button variant={'outline'} paddingX={8} leftIcon={<SignInIcon />}>
-                            Войти
-                        </Button>
+                        {authorized ? (
+                            <IconButton
+                                icon={<UserDefaultIcon />}
+                                isRound={true}
+                                variant={'ghost'}
+                                bg={'elements.surfaces'}
+                                aria-label={'userIcon'}
+                                onClick={() => {
+                                    window.location.href = '/user';
+                                }}
+                            />
+                        ) : (
+                            <Button variant={'outline'} paddingX={8} leftIcon={<SignInIcon />}>
+                                Войти
+                            </Button>
+                        )}
                     </div>
                     <div className={styles.side__spacer} />
                 </div>

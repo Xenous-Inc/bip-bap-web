@@ -28,7 +28,7 @@ const LabeledInput: React.FC<ILabeledInputProp> = props => {
                 <Input
                     variant={'filled'}
                     height={10}
-                    paddingTop={2}
+                    paddingTop={4}
                     {...props}
                     placeholder={''}
                     onChange={event => {
