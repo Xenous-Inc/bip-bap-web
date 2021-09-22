@@ -35,9 +35,9 @@ const MapController: React.FC<IMapControllerProp> = props => {
     return (
         <div {...props} className={`${styles.container} ${props.className}`}>
             <div className={styles.container__legend}>
-                <FlowerIcon width={20} height={20} />
+                <FlowerIcon height={20} />
                 <div className={styles.legend__gradient} />
-                <SkullIcon width={20} height={20} />
+                <SkullIcon height={20} />
             </div>
 
             <div className={styles.container__zoom}>

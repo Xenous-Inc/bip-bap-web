@@ -1,12 +1,91 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import pageStyles from '@styles/Page.module.css';
 import styles from './Map.module.css';
 import Header from '@components/organisms/Header';
 import MapController from '@components/organisms/MapController';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import mapboxgl, { Map as MapBoxMap, LngLat } from 'mapbox-gl';
+
+process.env.MAPBOX_ACCESS_TOKEN && (mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN);
 
 const Map: NextPage = () => {
+    const mapContainer = useRef<HTMLDivElement>(null);
+    const map = useRef<MapBoxMap>(null);
+
+    const [coords, setCoords] = useState<LngLat>(new LngLat(73.371454, 54.985974));
+    const [zoom, setZoom] = useState(11);
+
+    useEffect(() => {
+        if (!mapContainer.current) return;
+        if (map.current) return;
+
+        const mapboxMap = new MapBoxMap({
+            container: mapContainer.current,
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: coords,
+            zoom: zoom,
+        });
+        mapboxMap.on('move', () => {
+            setCoords(mapboxMap.getCenter());
+            setZoom(mapboxMap.getZoom());
+        });
+        /*mapboxMap.on('load', () => {
+            // Add a geojson point source.
+            // Heatmap layers also work with a vector tile source.
+            mapboxMap.addSource('earthquakes', {
+                type: 'geojson',
+                data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson',
+            });
+
+            mapboxMap.addLayer(
+                {
+                    id: 'earthquakes-heat',
+                    type: 'heatmap',
+                    source: 'earthquakes',
+                    maxzoom: 9,
+                    paint: {
+                        // Increase the heatmap weight based on frequency and property magnitude
+                        'heatmap-weight': ['interpolate', ['linear'], ['get', 'mag'], 0, 0, 6, 1],
+                        // Increase the heatmap color weight weight by zoom level
+                        // heatmap-intensity is a multiplier on top of heatmap-weight
+                        'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 0, 1, 9, 3],
+                        // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+                        // Begin color ramp at 0-stop with a 0-transparancy color
+                        // to create a blur-like effect.
+                        'heatmap-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['heatmap-density'],
+                            0,
+                            'rgba(33,102,172,0)',
+                            0.2,
+                            'rgb(103,169,207)',
+                            0.4,
+                            'rgb(209,229,240)',
+                            0.6,
+                            'rgb(253,219,199)',
+                            0.8,
+                            'rgb(239,138,98)',
+                            1,
+                            'rgb(178,24,43)',
+                        ],
+                        // Adjust the heatmap radius by zoom level
+                        'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 20],
+                        // Transition from heatmap to circle layer by zoom level
+                        'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 1, 9, 0],
+                    },
+                },
+                'waterway-label',
+            );
+        });*/
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        map.current = mapboxMap;
+    }, [mapContainer.current]);
+
     return (
         <div className={pageStyles.container}>
             <Head>
@@ -18,7 +97,13 @@ const Map: NextPage = () => {
             <Header />
 
             <main className={styles.container__main}>
-                <MapController className={styles.main__controller} />
+                <div ref={mapContainer} className={styles.main__map}>
+                    <MapController
+                        className={styles.map__controller}
+                        onZoomIn={() => map.current?.flyTo({ zoom: zoom + 1 })}
+                        onZoomOut={() => map.current?.flyTo({ zoom: zoom - 1 })}
+                    />
+                </div>
             </main>
         </div>
     );
