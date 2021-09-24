@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Header from '@components/organisms/Header';
 import pageStyles from '@styles/Page.module.css';
-import styles from '../user/User.module.css';
+import styles from './User.module.css';
 import LabeledInput from '@components/atoms/LabeledInput';
 import UserDefaultIcon from '@icons/UserDefaultIcon';
 import { Button } from '@chakra-ui/react';
