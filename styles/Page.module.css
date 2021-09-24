@@ -5,3 +5,9 @@
     min-width: 100%;
     flex-direction: column;
 }
+.container__main {
+    margin-bottom: 50px;
+    margin-inline: 50px;
+    height: 100%;
+    width: 100%;
+}

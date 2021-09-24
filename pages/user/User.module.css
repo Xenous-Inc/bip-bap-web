@@ -1,0 +1,30 @@
+.container__main {
+    display: flex;
+    height: 80%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.main__credentials {
+    width: 100%;
+    max-width: 400px;
+}
+
+.main__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.header__text {
+    height: 22px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #37394F;
+    margin-left: 5px;
+    align-items: center;
+    justify-content: center;
+}
