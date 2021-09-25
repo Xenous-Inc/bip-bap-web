@@ -112,6 +112,7 @@
     border-radius: 16px;
     transition: 200ms;
     user-select: none;
+    align-items: center;
 }
 .selectorOptions__option > svg {
     margin-right: 4px;
