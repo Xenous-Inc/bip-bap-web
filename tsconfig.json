@@ -15,10 +15,12 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@icons/*": ["src/components/icons/*"],
-      "@components/*": ["src/components/*"],
-      "@pages/*": ["src/pages/*"],
       "@public/*": ["public/*"],
+      "@api/*": ["src/api/*"],
+      "@components/*": ["src/components/*"],
+      "@icons/*": ["src/components/icons/*"],
+      "@pages/*": ["src/pages/*"],
+      "@store/*": ["src/store/*"],
       "@styles/*": ["src/styles/*"],
     }
   },
