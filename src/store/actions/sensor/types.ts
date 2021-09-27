@@ -1,20 +1,23 @@
 import { IAction, IApiRequestPayload, IErrorPayload, ISuccessPayload } from '@store/types';
-import { IGetSensorResponseData, IPostSensorRequestData, IPostSensorResponseData } from '@api/types/sensor';
+import { IGetAllSensorsResponseData, IGetSensorResponseData } from '@api/types/sensors';
 
-export enum PostSensorActions {
-    Default = '@Post-Sensor',
-    Start = '@Post-Sensor_start',
-    Success = '@Post-Sensor_success',
-    Error = '@Post-Sensor_error',
+export enum GetAllSensorsActions {
+    Default = '@Get-All-Sensors',
+    Start = '@Get-All-Sensors_start',
+    Success = '@Get-All-Sensors_success',
+    Error = '@Get-All-Sensors_error',
 }
 
-export type IPostSensorAction = IAction<PostSensorActions.Default, IApiRequestPayload<IPostSensorRequestData>>;
+export type IGetAllSensorsAction = IAction<GetAllSensorsActions.Default, IApiRequestPayload>;
 
-export type IPostSensorActionStart = IAction<PostSensorActions.Start>;
+export type IGetAllSensorsActionStart = IAction<GetAllSensorsActions.Start>;
 
-export type IPostSensorActionSuccess = IAction<PostSensorActions.Success, ISuccessPayload<IPostSensorResponseData>>;
+export type IGetAllSensorsActionSuccess = IAction<
+    GetAllSensorsActions.Success,
+    ISuccessPayload<IGetAllSensorsResponseData>
+>;
 
-export type IPostSensorActionError = IAction<PostSensorActions.Error, IErrorPayload>;
+export type IGetAllSensorsActionError = IAction<GetAllSensorsActions.Error, IErrorPayload>;
 
 export enum GetSensorActions {
     Default = '@Get-Sensor',

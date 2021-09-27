@@ -29,13 +29,17 @@ export interface ISensor {
 
     firmwareVersion: string;
 
-    owner: string;
+    serialNumber: string;
 
-    token?: string;
+    approvedBySensor: boolean;
+
+    owner: string;
 
     settings?: ISettings;
 
     location?: ILocation;
+
+    lastValue?: string;
 
     values?: Array<string>;
 }

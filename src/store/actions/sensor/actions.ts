@@ -1,22 +1,22 @@
 import { HTTPMethod } from '@api/types';
 import Rests, { SensorRests } from '@api/rests';
-import { IDeleteSensorRequestQuery, IGetSensorRequestQuery, IPostSensorRequestData } from '@api/types/sensor';
+import { IDeleteSensorRequestQuery, IGetSensorRequestQuery } from '@api/types/sensors';
 import {
     DeleteSensorActions,
+    GetAllSensorsActions,
     GetSensorActions,
     IDeleteSensorAction,
+    IGetAllSensorsAction,
     IGetSensorAction,
-    IPostSensorAction,
-    PostSensorActions,
 } from '@store/actions/sensor/types';
 import { createTokenFlag } from '@store/flags';
 
-export const createPostSensorAction = (raw: IPostSensorRequestData): IPostSensorAction => ({
-    type: PostSensorActions.Default,
+export const createGetAllSensorsAction = (): IGetAllSensorsAction => ({
+    type: GetAllSensorsActions.Default,
     payload: {
-        method: HTTPMethod.Post,
-        rest: Rests.sensor + SensorRests.post,
-        data: raw,
+        method: HTTPMethod.Get,
+        rest: Rests.sensor + SensorRests.getAll,
+        data: {},
         flags: [createTokenFlag()],
     },
 });

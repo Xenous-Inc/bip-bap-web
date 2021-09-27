@@ -1,29 +1,10 @@
 import { ISensor } from '@api/models/Sensor';
 
 /**
- * @description This interface describes necessary PostSensorRequest payload fields
+ * @description This interface describes fields that would be contained in successful GetAllSensorsResponse
  * */
-export interface IPostSensorRequestData {
-    name: string;
-
-    settings?: any; // todo: replace with normal data model
-
-    model: string;
-
-    version: string;
-
-    firmwareVersion: string;
-
-    location?: any; // todo: replace with normal data model
-}
-
-/**
- * @description This interface describes fields that would be contained in successful PostSensorResponse
- * */
-export interface IPostSensorResponseData {
-    sensor: ISensor;
-
-    sensorToken: string;
+export interface IGetAllSensorsResponseData {
+    sensors: Array<ISensor>;
 }
 
 /**

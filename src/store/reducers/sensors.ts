@@ -3,41 +3,37 @@ import { createReducer } from '@reduxjs/toolkit';
 import { ISensor } from '@api/models/Sensor';
 import {
     DeleteSensorActions,
+    GetAllSensorsActions,
     GetSensorActions,
     IDeleteSensorActionError,
+    IGetAllSensorsActionError,
+    IGetAllSensorsActionSuccess,
     IGetSensorActionError,
     IGetSensorActionSuccess,
-    IPostSensorActionError,
-    IPostSensorActionSuccess,
-    PostSensorActions,
 } from '@store/actions/sensor/types';
 
-export interface ISensorState extends IApiState {
-    sensor: ISensor | null;
-
-    sensorToken: string | null;
+export interface ISensorsState extends IApiState {
+    sensors: Array<ISensor> | null;
 }
 
-const initialState: ISensorState = {
+const initialState: ISensorsState = {
     isLoading: false,
-    sensor: null,
-    sensorToken: null,
+    sensors: null,
     error: null,
 };
 
-const sensorReducer = createReducer(initialState, {
-    // * Post Sensor Actions * //
-    [PostSensorActions.Start]: () => ({
+const sensorsReducer = createReducer(initialState, {
+    // * Get All Sensors Actions * //
+    [GetAllSensorsActions.Start]: () => ({
         ...initialState,
         isLoading: true,
     }),
-    [PostSensorActions.Success]: (state, action: IPostSensorActionSuccess) => ({
+    [GetAllSensorsActions.Success]: (state, action: IGetAllSensorsActionSuccess) => ({
         ...state,
-        sensor: action.payload.data.sensor,
-        sensorToken: action.payload.data.sensorToken,
+        sensors: [...action.payload.data.sensors],
         isLoading: false,
     }),
-    [PostSensorActions.Error]: (state, action: IPostSensorActionError) => ({
+    [GetAllSensorsActions.Error]: (state, action: IGetAllSensorsActionError) => ({
         ...state,
         error: action.payload.error,
         isLoading: false,
@@ -49,7 +45,7 @@ const sensorReducer = createReducer(initialState, {
     }),
     [GetSensorActions.Success]: (state, action: IGetSensorActionSuccess) => ({
         ...state,
-        sensor: action.payload.data.sensor,
+        sensors: [action.payload.data.sensor],
         isLoading: false,
     }),
     [GetSensorActions.Error]: (state, action: IGetSensorActionError) => ({
@@ -72,4 +68,4 @@ const sensorReducer = createReducer(initialState, {
     }),
 });
 
-export default sensorReducer;
+export default sensorsReducer;

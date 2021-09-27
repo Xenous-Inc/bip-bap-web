@@ -10,7 +10,9 @@ export interface IUser {
 
     name: string;
 
-    type?: UserRole;
+    type: UserRole;
+
+    email: string;
 
     sensors: Array<ISensor>;
 }

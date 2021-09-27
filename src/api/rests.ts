@@ -15,15 +15,14 @@ export const AuthRests = {
 };
 
 export const SensorRests = {
-    post: '',
+    getAll: 'all/',
     get: (id: string) => `${id}/`,
     delete: (id: string) => `${id}/`,
     value: 'value/',
 };
 
-export const SensorValueRests = {
-    post: '',
-    get: (id: string) => `${id}/`,
-    delete: (id: string) => `${id}/`,
-    getAll: (id: string) => `all/${id}/`,
-};
+// export const SensorValueRests = {
+//     get: (id: string) => `${id}/`,
+//     delete: (id: string) => `${id}/`,
+//     getAll: (id: string) => `all/${id}/`,
+// };
