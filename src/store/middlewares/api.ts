@@ -1,7 +1,7 @@
 import { IAction, IApiRequestPayload, IErrorPayload, ISuccessPayload } from '@store/types';
 import { Postfixes } from '@store/actions/constants';
 import { HTTPMethod, IApiErrorResponse, IApiSuccessResponse } from '@api/types';
-import { ActionFlags, IActionTokenFlag } from '@store/flags';
+import { ActionFlags, ITokenFlag } from '@store/flags';
 
 const BaseUrl = process.env.BASE_URL || '';
 
@@ -24,7 +24,7 @@ const apiMiddleware = () => (next: any) => (action: IAction<string, IApiRequestP
         const headers: any = { 'Content-Type': 'application/json' };
 
         const tokenFlag = flags && flags?.find(flag => flag.name == ActionFlags.Token);
-        if (tokenFlag) headers.Authorization = (tokenFlag as IActionTokenFlag).data;
+        if (tokenFlag) headers.Authorization = (tokenFlag as ITokenFlag).data;
 
         return headers;
     };

@@ -8,11 +8,12 @@ import {
     SignInActions,
     SignUpActions,
 } from '@store/actions/auth/types';
-import { ILogOutAllRequest, ILogOutRequest, ISignInRequest, ISignUpRequest } from '@api/types/auth';
+import { ISignInRequestData, ISignUpRequestData } from '@api/types/auth';
 import Rests, { AuthRests } from '@api/rests';
 import { HTTPMethod } from '@api/types';
+import { createTokenFlag } from '@store/flags';
 
-export const createSignInAction = (raw: ISignInRequest): ISignInAction => ({
+export const createSignInAction = (raw: ISignInRequestData): ISignInAction => ({
     type: SignInActions.Default,
     payload: {
         method: HTTPMethod.Post,
@@ -21,7 +22,7 @@ export const createSignInAction = (raw: ISignInRequest): ISignInAction => ({
     },
 });
 
-export const createSignUpAction = (raw: ISignUpRequest): ISignUpAction => ({
+export const createSignUpAction = (raw: ISignUpRequestData): ISignUpAction => ({
     type: SignUpActions.Default,
     payload: {
         method: HTTPMethod.Post,
@@ -30,20 +31,22 @@ export const createSignUpAction = (raw: ISignUpRequest): ISignUpAction => ({
     },
 });
 
-export const createLogOutAction = (raw: ILogOutRequest): ILogOutAction => ({
+export const createLogOutAction = (): ILogOutAction => ({
     type: LogOutActions.Default,
     payload: {
         method: HTTPMethod.Get,
         rest: Rests.auth + AuthRests.logOut,
-        data: raw,
+        data: {},
+        flags: [createTokenFlag()],
     },
 });
 
-export const createLogOutAllAction = (raw: ILogOutAllRequest): ILogOutAllAction => ({
+export const createLogOutAllAction = (): ILogOutAllAction => ({
     type: LogOutAllActions.Default,
     payload: {
         method: HTTPMethod.Get,
         rest: Rests.auth + AuthRests.logOutAll,
-        data: raw,
+        data: {},
+        flags: [createTokenFlag()],
     },
 });

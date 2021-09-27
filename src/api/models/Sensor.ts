@@ -33,9 +33,9 @@ export interface ISensor {
 
     token?: string;
 
-    settings: ISettings;
+    settings?: ISettings;
 
-    location: ILocation;
+    location?: ILocation;
 
-    values: Array<string>;
+    values?: Array<string>;
 }

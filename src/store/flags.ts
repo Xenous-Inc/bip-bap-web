@@ -4,6 +4,6 @@ export enum ActionFlags {
     Token = 'Token',
 }
 
-export type IActionTokenFlag = IActionFlag<string>;
+export type ITokenFlag = IActionFlag<string>;
 
-export const createActionTokenFlag = (token: string): IActionTokenFlag => ({ name: ActionFlags.Token, data: token });
+export const createTokenFlag = (): ITokenFlag => ({ name: ActionFlags.Token });

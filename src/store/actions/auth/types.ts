@@ -1,13 +1,4 @@
-import {
-    ILogOutAllRequest,
-    ILogOutAllResponseData,
-    ILogOutRequest,
-    ILogOutResponseData,
-    ISignInRequest,
-    ISignInResponseData,
-    ISignUpRequest,
-    ISignUpResponseData,
-} from '@api/types/auth';
+import { ISignInRequestData, ISignInResponseData, ISignUpRequestData, ISignUpResponseData } from '@api/types/auth';
 import { IAction, IApiRequestPayload, IErrorPayload, ISuccessPayload } from '@store/types';
 
 export enum SignInActions {
@@ -17,7 +8,7 @@ export enum SignInActions {
     Error = '@Sign-In_error',
 }
 
-export type ISignInAction = IAction<SignInActions.Default, IApiRequestPayload<ISignInRequest>>;
+export type ISignInAction = IAction<SignInActions.Default, IApiRequestPayload<ISignInRequestData>>;
 
 export type ISignInActionStart = IAction<SignInActions.Start>;
 
@@ -32,7 +23,7 @@ export enum SignUpActions {
     Error = '@Sign-Up_error',
 }
 
-export type ISignUpAction = IAction<SignUpActions.Default, IApiRequestPayload<ISignUpRequest>>;
+export type ISignUpAction = IAction<SignUpActions.Default, IApiRequestPayload<ISignUpRequestData>>;
 
 export type ISignUpActionStart = IAction<SignUpActions.Start>;
 
@@ -47,11 +38,11 @@ export enum LogOutActions {
     Error = '@Log-Out_error',
 }
 
-export type ILogOutAction = IAction<LogOutActions.Default, IApiRequestPayload<ILogOutRequest>>;
+export type ILogOutAction = IAction<LogOutActions.Default, IApiRequestPayload>;
 
 export type ILogOutActionStart = IAction<LogOutActions.Start>;
 
-export type ILogOutActionSuccess = IAction<LogOutActions.Success, ISuccessPayload<ILogOutResponseData>>;
+export type ILogOutActionSuccess = IAction<LogOutActions.Success, ISuccessPayload>;
 
 export type ILogOutActionError = IAction<LogOutActions.Error, IErrorPayload>;
 
@@ -62,10 +53,10 @@ export enum LogOutAllActions {
     Error = '@Log-Out-All_error',
 }
 
-export type ILogOutAllAction = IAction<LogOutAllActions.Default, IApiRequestPayload<ILogOutAllRequest>>;
+export type ILogOutAllAction = IAction<LogOutAllActions.Default, IApiRequestPayload>;
 
 export type ILogOutAllActionStart = IAction<LogOutAllActions.Start>;
 
-export type ILogOutAllActionSuccess = IAction<LogOutAllActions.Success, ISuccessPayload<ILogOutAllResponseData>>;
+export type ILogOutAllActionSuccess = IAction<LogOutAllActions.Success, ISuccessPayload>;
 
 export type ILogOutAllActionError = IAction<LogOutAllActions.Error, IErrorPayload>;

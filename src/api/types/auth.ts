@@ -3,7 +3,7 @@ import { IUser } from '@api/models/User';
 /**
  * @description This interface describes necessary SignInRequest payload fields
  * */
-export interface ISignInRequest {
+export interface ISignInRequestData {
     email: string;
 
     password: string;
@@ -21,7 +21,7 @@ export interface ISignInResponseData {
 /**
  * @description This interface describes necessary SignUpRequest payload fields
  * */
-export interface ISignUpRequest {
+export interface ISignUpRequestData {
     name: string;
 
     email: string;
@@ -37,23 +37,3 @@ export interface ISignUpResponseData {
 
     user: IUser;
 }
-
-/**
- * @description This interface describes necessary LogOutRequest payload fields
- * */
-export interface ILogOutRequest {}
-
-/**
- * @description This interface describes fields that would be contained in successful LogOutResponse data
- * */
-export interface ILogOutResponseData {}
-
-/**
- * @description This interface describes necessary LogOutAllRequest payload fields
- * */
-export interface ILogOutAllRequest {}
-
-/**
- * @description This interface describes fields that would be contained in successful LogOutAllResponse data
- * */
-export interface ILogOutAllResponseData {}
