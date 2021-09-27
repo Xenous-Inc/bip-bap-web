@@ -1,8 +1,8 @@
+import { ISensor } from '@api/models/Sensor';
+
 /**
  * @description This interface describes necessary PostSensorRequest payload fields
  * */
-import { ISensor } from '@api/models/Sensor';
-
 export interface IPostSensorRequestData {
     name: string;
 
