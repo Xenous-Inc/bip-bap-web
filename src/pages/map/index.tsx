@@ -7,6 +7,9 @@ import Header from '@components/organisms/Header';
 import MapController from '@components/organisms/MapController';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl, { Map as MapBoxMap, LngLat } from 'mapbox-gl';
+import { useSensors } from '@pages/map/Map.hooks';
+import { Spinner } from '@chakra-ui/react';
+import theme from '@styles/theme';
 
 mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN || '';
 
@@ -35,7 +38,23 @@ const Map: NextPage = () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         map.current = mapboxMap;
+        getSensors();
     }, [mapContainer.current]);
+
+    const { isLoading, sensors, error, getSensors } = useSensors();
+
+    useEffect(
+        () =>
+            sensors?.forEach(
+                sensor =>
+                    sensor.location &&
+                    map.current &&
+                    new mapboxgl.Marker({ color: theme.colors.green })
+                        .setLngLat([sensor.location.coordinates[0], sensor.location.coordinates[1]])
+                        .addTo(map.current),
+            ),
+        [sensors],
+    );
 
     return (
         <div className={pageStyles.container}>
@@ -49,6 +68,11 @@ const Map: NextPage = () => {
 
             <main className={styles.container__main}>
                 <div ref={mapContainer} className={styles.main__map}>
+                    {isLoading && (
+                        <div className={styles.map__overlay}>
+                            <Spinner color={'green'} size={'xl'} />
+                        </div>
+                    )}
                     <MapController
                         className={styles.map__controller}
                         onZoomIn={() => map.current?.flyTo({ zoom: zoom + 1 })}
