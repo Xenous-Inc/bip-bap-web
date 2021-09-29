@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import pageStyles from '@styles/Page.module.css';
@@ -6,7 +6,7 @@ import styles from './Map.module.css';
 import Header from '@components/organisms/Header';
 import MapController from '@components/organisms/MapController';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import mapboxgl, { Map as MapBoxMap, LngLat } from 'mapbox-gl';
+import mapboxgl, { Map as MapBoxMap, LngLat, Marker } from 'mapbox-gl';
 import { useSensors } from '@pages/map/Map.hooks';
 import { Spinner } from '@chakra-ui/react';
 import theme from '@styles/theme';
@@ -43,6 +43,35 @@ const Map: NextPage = () => {
 
     const { isLoading, sensors, error, getSensors } = useSensors();
 
+    const [renderedMarkers, setRenderedMarkers] = useState<Array<Marker>>([]);
+
+    const currentMarkers = useMemo(
+        () =>
+            sensors?.map(
+                sensor =>
+                    sensor.location &&
+                    new mapboxgl.Marker({ color: theme.colors.green }).setLngLat([
+                        sensor.location.coordinates[0],
+                        sensor.location.coordinates[1],
+                    ]),
+            ),
+        [sensors],
+    );
+
+    useEffect(() => {
+        renderedMarkers.forEach(marker => marker.remove());
+
+        const currentMap = map.current;
+        if (currentMap) {
+            currentMarkers?.forEach(marker => {
+                if (!marker) return;
+
+                marker.addTo(currentMap);
+                setRenderedMarkers(prevRenderedMarkers => [...prevRenderedMarkers, marker]);
+            });
+        }
+    }, [currentMarkers, map.current]);
+
     useEffect(
         () =>
             sensors?.forEach(
@@ -53,7 +82,7 @@ const Map: NextPage = () => {
                         .setLngLat([sensor.location.coordinates[0], sensor.location.coordinates[1]])
                         .addTo(map.current),
             ),
-        [sensors],
+        [sensors, map.current],
     );
 
     return (
