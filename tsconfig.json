@@ -19,6 +19,7 @@
       "@api/*": ["src/api/*"],
       "@components/*": ["src/components/*"],
       "@icons/*": ["src/components/icons/*"],
+      "@context/*": ["src/context/*"],
       "@pages/*": ["src/pages/*"],
       "@store/*": ["src/store/*"],
       "@styles/*": ["src/styles/*"],

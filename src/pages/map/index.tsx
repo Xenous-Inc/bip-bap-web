@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+import React from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import pageStyles from '@styles/Page.module.css';
@@ -6,42 +6,18 @@ import styles from './Map.module.css';
 import Header from '@components/organisms/Header';
 import MapController from '@components/organisms/MapController';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import mapboxgl, { Map as MapBoxMap, LngLat, Marker } from 'mapbox-gl';
 import { useSensors } from '@pages/map/Map.hooks';
 import { Spinner } from '@chakra-ui/react';
-import theme from '@styles/theme';
-
-mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN || '';
+import MapComponent from '@components/organisms/Map';
+import { MapProvider, useMapContext } from '@context/MapContext';
 
 const Map: NextPage = () => {
-    const mapContainer = useRef<HTMLDivElement>(null);
-    const map = useRef<MapBoxMap>(null);
-
-    const [coords, setCoords] = useState<LngLat>(new LngLat(73.371454, 54.985974));
-    const [zoom, setZoom] = useState(11);
-
-    useEffect(() => {
-        if (!mapContainer.current) return;
-        if (map.current) return;
-
-        const mapboxMap = new MapBoxMap({
-            container: mapContainer.current,
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: coords,
-            zoom: zoom,
-        });
-        mapboxMap.on('move', () => {
-            setCoords(mapboxMap.getCenter());
-            setZoom(mapboxMap.getZoom());
-        });
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        map.current = mapboxMap;
-        getSensors();
-    }, [mapContainer.current]);
-
+    const { map, zoom } = useMapContext();
     const { isLoading, sensors, error, getSensors } = useSensors();
+
+    /*useEffect(() => {
+        getSensors();
+    }, []);
 
     const [renderedMarkers, setRenderedMarkers] = useState<Array<Marker>>([]);
 
@@ -50,7 +26,7 @@ const Map: NextPage = () => {
             sensors?.map(
                 sensor =>
                     sensor.location &&
-                    new mapboxgl.Marker({ color: theme.colors.green }).setLngLat([
+                    new Marker({ color: theme.colors.green }).setLngLat([
                         sensor.location.coordinates[0],
                         sensor.location.coordinates[1],
                     ]),
@@ -61,29 +37,15 @@ const Map: NextPage = () => {
     useEffect(() => {
         renderedMarkers.forEach(marker => marker.remove());
 
-        const currentMap = map.current;
-        if (currentMap) {
+        if (map) {
             currentMarkers?.forEach(marker => {
                 if (!marker) return;
 
-                marker.addTo(currentMap);
+                marker.addTo(map);
                 setRenderedMarkers(prevRenderedMarkers => [...prevRenderedMarkers, marker]);
             });
         }
-    }, [currentMarkers, map.current]);
-
-    useEffect(
-        () =>
-            sensors?.forEach(
-                sensor =>
-                    sensor.location &&
-                    map.current &&
-                    new mapboxgl.Marker({ color: theme.colors.green })
-                        .setLngLat([sensor.location.coordinates[0], sensor.location.coordinates[1]])
-                        .addTo(map.current),
-            ),
-        [sensors, map.current],
-    );
+    }, [currentMarkers, map]);*/
 
     return (
         <div className={pageStyles.container}>
@@ -96,7 +58,7 @@ const Map: NextPage = () => {
             <Header />
 
             <main className={styles.container__main}>
-                <div ref={mapContainer} className={styles.main__map}>
+                <MapComponent className={styles.main__map}>
                     {isLoading && (
                         <div className={styles.map__overlay}>
                             <Spinner color={'green'} size={'xl'} />
@@ -104,13 +66,17 @@ const Map: NextPage = () => {
                     )}
                     <MapController
                         className={styles.map__controller}
-                        onZoomIn={() => map.current?.flyTo({ zoom: zoom + 1 })}
-                        onZoomOut={() => map.current?.flyTo({ zoom: zoom - 1 })}
+                        onZoomIn={() => map?.flyTo({ zoom: zoom + 1 })}
+                        onZoomOut={() => map?.flyTo({ zoom: zoom - 1 })}
                     />
-                </div>
+                </MapComponent>
             </main>
         </div>
     );
 };
 
-export default Map;
+export default () => (
+    <MapProvider>
+        <Map />
+    </MapProvider>
+);

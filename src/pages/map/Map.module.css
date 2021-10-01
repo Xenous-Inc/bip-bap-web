@@ -20,6 +20,11 @@
     height: 100%;
 }
 
+.map__canvas {
+    width: 100%;
+    flex-grow: 1;
+}
+
 .main__map {
     width: 100%;
     flex-grow: 1;
