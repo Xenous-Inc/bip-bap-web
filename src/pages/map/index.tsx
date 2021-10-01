@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import pageStyles from '@styles/Page.module.css';
@@ -10,42 +10,29 @@ import { useSensors } from '@pages/map/Map.hooks';
 import { Spinner } from '@chakra-ui/react';
 import MapComponent from '@components/organisms/Map';
 import { MapProvider, useMapContext } from '@context/MapContext';
+import theme from '@styles/theme';
 
 const Map: NextPage = () => {
-    const { map, zoom } = useMapContext();
-    const { isLoading, sensors, error, getSensors } = useSensors();
+    const { map, canvas, zoom } = useMapContext();
+    const { isLoading, sensors, getSensors } = useSensors();
 
-    /*useEffect(() => {
-        getSensors();
-    }, []);
+    useEffect(getSensors, []);
 
-    const [renderedMarkers, setRenderedMarkers] = useState<Array<Marker>>([]);
-
-    const currentMarkers = useMemo(
+    useEffect(
         () =>
-            sensors?.map(
-                sensor =>
-                    sensor.location &&
-                    new Marker({ color: theme.colors.green }).setLngLat([
-                        sensor.location.coordinates[0],
-                        sensor.location.coordinates[1],
-                    ]),
-            ),
-        [sensors],
+            sensors?.forEach(sensor => {
+                const ctx = canvas?.getContext('2d');
+                if (sensor.location && ctx && map) {
+                    const pixels = map.project([sensor.location.coordinates[0], sensor.location.coordinates[1]]);
+
+                    ctx.fillStyle = theme.colors.green;
+                    ctx.beginPath();
+                    ctx.arc(pixels.x, pixels.y, 20, 0, Math.PI * 2, false);
+                    ctx.fill();
+                }
+            }),
+        [sensors, map, canvas],
     );
-
-    useEffect(() => {
-        renderedMarkers.forEach(marker => marker.remove());
-
-        if (map) {
-            currentMarkers?.forEach(marker => {
-                if (!marker) return;
-
-                marker.addTo(map);
-                setRenderedMarkers(prevRenderedMarkers => [...prevRenderedMarkers, marker]);
-            });
-        }
-    }, [currentMarkers, map]);*/
 
     return (
         <div className={pageStyles.container}>
@@ -58,7 +45,7 @@ const Map: NextPage = () => {
             <Header />
 
             <main className={styles.container__main}>
-                <MapComponent className={styles.main__map}>
+                <MapComponent className={styles.main__map} onMove={getSensors}>
                     {isLoading && (
                         <div className={styles.map__overlay}>
                             <Spinner color={'green'} size={'xl'} />

@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import mapboxgl, { Map as MapBoxMap } from 'mapbox-gl';
-import theme from '@styles/theme';
 import styles from './Map.module.css';
 import { useMapContext } from '@context/MapContext';
 
@@ -14,6 +13,13 @@ const Map: React.FC<IMapProp> = props => {
     const { id = 'Map__container', onMove } = props;
 
     const { map, setMap, canvas, setCanvas, coords, setCoords, zoom, setZoom } = useMapContext();
+
+    /**
+     * @description These coefficients are used to resize actual canvas size
+     * This allows you to take into account data from neighboring sensors, as on big zooms there are not lot of them
+     * */
+    // const biggerCanvasSideCoef = useMemo(() => 0.0025 * Math.pow(Math.max(zoom, 7) - 2.5, 2), [zoom]); // coefficient for bigger side of canvas
+    // const smallerCanvasSideCoef = useMemo(() => 0.005 * Math.pow(Math.max(zoom, 7) - 2.5, 2), [zoom]); // coefficient for smaller side of canvas
 
     const container = useRef<HTMLDivElement>(null);
 
@@ -59,11 +65,6 @@ const Map: React.FC<IMapProp> = props => {
             canvas.height = canvas.offsetHeight;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = `${theme.colors.red}33`;
-            ctx.beginPath();
-            ctx.rect(0, 0, canvas.width, canvas.height);
-            ctx.fill();
         }
     }, [canvas]);
 
@@ -88,6 +89,7 @@ const Map: React.FC<IMapProp> = props => {
             _map.removeSource('canvas-source');
             boundCanvas(_map);
             drawCanvas();
+            if (onMove) onMove();
         });
 
         _map.on('load', () => {
