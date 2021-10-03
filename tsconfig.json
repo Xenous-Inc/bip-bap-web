@@ -20,6 +20,7 @@
       "@components/*": ["src/components/*"],
       "@icons/*": ["src/components/icons/*"],
       "@context/*": ["src/context/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@pages/*": ["src/pages/*"],
       "@store/*": ["src/store/*"],
       "@styles/*": ["src/styles/*"],

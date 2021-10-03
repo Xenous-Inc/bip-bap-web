@@ -6,7 +6,7 @@ import styles from './Map.module.css';
 import Header from '@components/organisms/Header';
 import MapController from '@components/organisms/MapController';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useSensors } from '@pages/map/Map.hooks';
+import { useSensors } from '../../hooks/Map.hooks';
 import { Spinner } from '@chakra-ui/react';
 import MapComponent from '@components/organisms/Map';
 import { MapProvider, useMapContext } from '@context/MapContext';
