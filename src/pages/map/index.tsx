@@ -7,7 +7,7 @@ import Header from '@components/organisms/Header';
 import MapController from '@components/organisms/MapController';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl, { LngLat, Map as MapBoxMap, Marker } from 'mapbox-gl';
-import { useSensors } from '@pages/map/Map.hooks';
+import { useSensors } from '@hooks/Map.hooks';
 import { Spinner } from '@chakra-ui/react';
 import theme from '@styles/theme';
 import { ISensorValue, ValueType } from '@api/models/SensorValue';
