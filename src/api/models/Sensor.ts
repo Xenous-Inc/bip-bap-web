@@ -1,3 +1,5 @@
+import { ISensorValue } from '@api/models/SensorValue';
+
 export enum RequestFrequency {
     '30m' = '30m',
     '1h' = '1h',
@@ -39,7 +41,7 @@ export interface ISensor {
 
     location?: ILocation;
 
-    lastValue?: string;
+    lastValue?: ISensorValue;
 
-    values?: Array<string>;
+    values?: Array<ISensorValue>;
 }

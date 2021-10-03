@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import pageStyles from '@styles/Page.module.css';
@@ -6,10 +6,11 @@ import styles from './Map.module.css';
 import Header from '@components/organisms/Header';
 import MapController from '@components/organisms/MapController';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import mapboxgl, { Map as MapBoxMap, LngLat, Marker } from 'mapbox-gl';
+import mapboxgl, { LngLat, Map as MapBoxMap, Marker } from 'mapbox-gl';
 import { useSensors } from '@pages/map/Map.hooks';
 import { Spinner } from '@chakra-ui/react';
 import theme from '@styles/theme';
+import { ISensorValue, ValueType } from '@api/models/SensorValue';
 
 mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN || '';
 
@@ -45,15 +46,45 @@ const Map: NextPage = () => {
 
     const [renderedMarkers, setRenderedMarkers] = useState<Array<Marker>>([]);
 
+    const getColor = (sensorValue: ISensorValue | undefined) => {
+        if (!sensorValue) return theme.colors.lightgrey;
+
+        // eslint-disable-next-line default-case
+        switch (sensorValue.type) {
+            case ValueType.PM25: {
+                if (sensorValue.value <= 15.4) return theme.colors.green;
+                if (sensorValue.value > 15.4 && sensorValue.value <= 40.4) return theme.colors.yellow;
+                return theme.colors.red;
+            }
+            case ValueType.PM10: {
+                if (sensorValue.value <= 54) return theme.colors.green;
+                if (sensorValue.value > 54 && sensorValue.value <= 154) return theme.colors.yellow;
+                return theme.colors.red;
+            }
+        }
+    };
+
     const currentMarkers = useMemo(
         () =>
             sensors?.map(
                 sensor =>
                     sensor.location &&
-                    new mapboxgl.Marker({ color: theme.colors.green }).setLngLat([
-                        sensor.location.coordinates[0],
-                        sensor.location.coordinates[1],
-                    ]),
+                    new mapboxgl.Marker({ color: getColor(sensor.lastValue) })
+                        .setLngLat([sensor.location.coordinates[0], sensor.location.coordinates[1]])
+                        .setPopup(
+                            new mapboxgl.Popup({ offset: 25 }).setHTML(
+                                `<h3>Модель: ${sensor.model}</h3>` +
+                                    `<h3>Версия: ${sensor.version}</h3>` +
+                                    `<h3>Автор: ${sensor.name}</h3>` +
+                                    `${
+                                        sensor.lastValue
+                                            ? `<h3>
+                                                ${sensor.lastValue.type}: ${sensor.lastValue.value}
+                                            </h3>`
+                                            : 'Измерения отсутсвуют'
+                                    }`,
+                            ),
+                        ),
             ),
         [sensors],
     );
@@ -71,19 +102,6 @@ const Map: NextPage = () => {
             });
         }
     }, [currentMarkers, map.current]);
-
-    useEffect(
-        () =>
-            sensors?.forEach(
-                sensor =>
-                    sensor.location &&
-                    map.current &&
-                    new mapboxgl.Marker({ color: theme.colors.green })
-                        .setLngLat([sensor.location.coordinates[0], sensor.location.coordinates[1]])
-                        .addTo(map.current),
-            ),
-        [sensors, map.current],
-    );
 
     return (
         <div className={pageStyles.container}>
