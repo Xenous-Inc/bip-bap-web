@@ -22,6 +22,11 @@ export interface ILocation {
     coordinates: Array<number>;
 }
 
+export interface ISensorLastValue {
+    pm10: ISensorValue;
+    pm25: ISensorValue;
+}
+
 export interface ISensor {
     name: string;
 
@@ -41,7 +46,7 @@ export interface ISensor {
 
     location?: ILocation;
 
-    lastValue?: ISensorValue;
+    lastValue?: ISensorLastValue;
 
     values?: Array<ISensorValue>;
 }

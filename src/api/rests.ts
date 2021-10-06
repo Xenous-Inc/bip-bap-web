@@ -1,7 +1,7 @@
 const Rests = {
     user: 'user/',
     auth: 'user/auth/',
-    sensor: 'sensor/',
+    sensor: '/sensor/',
     ping: 'ping/',
 };
 

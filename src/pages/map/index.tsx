@@ -46,30 +46,30 @@ const Map: NextPage = () => {
 
     const [renderedMarkers, setRenderedMarkers] = useState<Array<Marker>>([]);
 
-    const getColor = (sensorValue: ISensorValue | undefined) => {
-        if (!sensorValue) return theme.colors.lightgrey;
-
-        // eslint-disable-next-line default-case
-        switch (sensorValue.type) {
-            case ValueType.PM25: {
-                if (sensorValue.value <= 15.4) return theme.colors.green;
-                if (sensorValue.value > 15.4 && sensorValue.value <= 40.4) return theme.colors.yellow;
-                return theme.colors.red;
-            }
-            case ValueType.PM10: {
-                if (sensorValue.value <= 54) return theme.colors.green;
-                if (sensorValue.value > 54 && sensorValue.value <= 154) return theme.colors.yellow;
-                return theme.colors.red;
-            }
-        }
-    };
+    // const getColor = (sensorValue: ISensorValue | undefined) => {
+    //     if (!sensorValue) return theme.colors.lightgrey;
+    //
+    //     // eslint-disable-next-line default-case
+    //     switch (sensorValue.type) {
+    //         case ValueType.PM25: {
+    //             if (sensorValue.value <= 15.4) return theme.colors.green;
+    //             if (sensorValue.value > 15.4 && sensorValue.value <= 40.4) return theme.colors.yellow;
+    //             return theme.colors.red;
+    //         }
+    //         case ValueType.PM10: {
+    //             if (sensorValue.value <= 54) return theme.colors.green;
+    //             if (sensorValue.value > 54 && sensorValue.value <= 154) return theme.colors.yellow;
+    //             return theme.colors.red;
+    //         }
+    //     }
+    // };
 
     const currentMarkers = useMemo(
         () =>
             sensors?.map(
                 sensor =>
                     sensor.location &&
-                    new mapboxgl.Marker({ color: getColor(sensor.lastValue) })
+                    new mapboxgl.Marker({ color: theme.colors.green })
                         .setLngLat([sensor.location.coordinates[0], sensor.location.coordinates[1]])
                         .setPopup(
                             new mapboxgl.Popup({ offset: 25 }).setHTML(
@@ -79,7 +79,10 @@ const Map: NextPage = () => {
                                     `${
                                         sensor.lastValue
                                             ? `<h3>
-                                                ${sensor.lastValue.type}: ${sensor.lastValue.value}
+                                                ${sensor.lastValue.pm10.type}: ${sensor.lastValue.pm10.value}
+                                            </h3>` +
+                                              `<h3>
+                                                ${sensor.lastValue.pm25.type}: ${sensor.lastValue.pm25.value}
                                             </h3>`
                                             : 'Измерения отсутсвуют'
                                     }`,
