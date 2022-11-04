@@ -12,7 +12,7 @@ import LineChartIcon from '@icons/LineChartIcon';
 import MapPinIcon from '@icons/MapPinIcon';
 
 interface IMapControllerProp extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    onLayerChange?(layer: Layer): void;
+    onLayerChange?(layers: Array<Layer>): void;
 
     onZoomOut?(): void;
 
@@ -28,9 +28,9 @@ const MapController: React.FC<IMapControllerProp> = props => {
     const { onLayerChange, onZoomIn, onZoomOut } = props;
 
     const [layersOpen, setLayersOpen] = useState(false);
-    const [layer, setLayer] = useState(Layer.gradient);
+    const [layers, setLayers] = useState([Layer.gradient]);
 
-    useEffect(() => onLayerChange?.(layer), [layer]);
+    useEffect(() => onLayerChange?.(layers), [layers]);
 
     return (
         <div {...props} className={`${styles.container} ${props.className}`}>
@@ -54,27 +54,39 @@ const MapController: React.FC<IMapControllerProp> = props => {
                     <div className={styles.selector__selectorOptions}>
                         <span
                             className={
-                                layer == Layer.gradient
+                                layers.includes(Layer.gradient)
                                     ? `${styles.selectorOptions__option} ${styles.selectorOptions__option_state_active}`
                                     : styles.selectorOptions__option
                             }
-                            onClick={() => setLayer(Layer.gradient)}
+                            onClick={() =>
+                                layers.includes(Layer.gradient)
+                                    ? setLayers(layers.filter(l => l != Layer.gradient))
+                                    : setLayers([...layers, Layer.gradient])
+                            }
                         >
                             <LineChartIcon
-                                stroke={layer == Layer.gradient ? theme.colors.white : theme.colors.elements.icons}
+                                stroke={
+                                    layers.includes(Layer.gradient) ? theme.colors.white : theme.colors.elements.icons
+                                }
                             />
                             Градиент
                         </span>
                         <span
                             className={
-                                layer == Layer.sensors
+                                layers.includes(Layer.sensors)
                                     ? `${styles.selectorOptions__option} ${styles.selectorOptions__option_state_active}`
                                     : styles.selectorOptions__option
                             }
-                            onClick={() => setLayer(Layer.sensors)}
+                            onClick={() =>
+                                layers.includes(Layer.sensors)
+                                    ? setLayers(layers.filter(l => l != Layer.sensors))
+                                    : setLayers([...layers, Layer.sensors])
+                            }
                         >
                             <MapPinIcon
-                                stroke={layer == Layer.sensors ? theme.colors.white : theme.colors.elements.icons}
+                                stroke={
+                                    layers.includes(Layer.sensors) ? theme.colors.white : theme.colors.elements.icons
+                                }
                             />
                             Датчики
                         </span>
